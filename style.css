@@ -1,0 +1,1210 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --hue: 159;
+  /* HSL color mode */
+  --base-color: hsl(var(--hue) 36% 57%);
+  --base-color-second: hsl(var(--hue) 65% 88%);
+  --base-color-alt: hsl(var(--hue) 57% 53%);
+  --title-color: hsl(var(--hue) 41% 10%);
+  --text-color: hsl(0 0% 46%);
+  --text-color-light: hsl(0 0% 98%);
+  --body-color: hsl(0 0% 98%);
+
+  scroll-behavior: smooth;
+
+  /* FONTS - padrão mobile */
+  --title-font-size: 1.875rem;
+  --subtitle-font-size: 1rem;
+  --header-height: 4.5rem;
+
+  --title-font: 'Poppins', sans-serif;
+  --body-font: 'DM Sans', sans-serif;
+}
+
+body {
+  font: 400 1rem var(--body-font);
+  color: var(--text-color);
+  background: var(--body-color);
+  -webkit-font-smoothing: antialiased; /* deixa a fonte mais suave nos navegadores que são do tipo webkit (chrome por exemplo) */
+}
+
+.title {
+  font: 700 var(--title-font-size) var(--title-font);
+  color: var(--title-color);
+  -webkit-font-smoothing: auto;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: var(--base-color);
+  color: var(--text-color-light);
+  height: 3.5rem; /* A altura não pega na tag a, porque por padrão ela é "display: inline". "display: inline" não recebe nem altura nem largura que estrapole o tamanho do conteúdo. Se mudar para "display: block", ele pega a altura, mas a largura corresponderá ao tamnho que estiver disponível para ele ocupar. Se mudar para "display: inline-block", ele vai pegar a altura, mas a largura se comportará da mesma forma que no "display: inline". Para conseguir colocae altura e largura, é preciso mudar para "display: inline-flex"  */
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2rem;
+  border-radius: 0.25rem;
+  font: 500 1rem var(--body-font);
+  z-index: 1;
+  transition: background 0.3s;
+  /* Atransição entre os backgroundes será de 0.3 segundos */
+}
+
+.button:hover {
+  background-color: var(--base-color-alt);
+}
+
+#header {
+  border-bottom: 1px solid #e4e4e4;
+  margin-bottom: 2rem;
+  display: flex;
+  width: 100%;
+  position: fixed;
+  z-index: 100;
+  background-color: var(--body-color);
+  top: 0;
+  left: 0;
+}
+
+#header.scroll {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+nav {
+  width: 100%;
+  height: var(--header-height);
+  display: flex; /* vai fazer um ficar ao lado do outro, porém grudados */
+  justify-content: space-between; /* propeiedade do display flex que os alinhará horizontalmente com o espaço certo entre eles, ocupando todo o espaço horizontal existente */
+  align-items: center; /* propriedade do display flex. Alinha os itens verticalmente */
+}
+
+nav .menu {
+  opacity: 0;
+  visibility: hidden;
+  top: -20rem;
+  transition: 0.2s;
+}
+
+nav .menu ul {
+  display: none;
+}
+
+nav.show .menu {
+  opacity: 1;
+  visibility: visible;
+  background: var(--body-color);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
+}
+
+nav.show .menu ul {
+  display: grid;
+}
+
+nav.show ul.grid {
+  gap: 4rem;
+}
+
+ul {
+  list-style: none;
+}
+
+nav ul li {
+  text-align: center;
+}
+
+nav ul li a {
+  transition: color 0.2s;
+  position: relative;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: var(--base-color);
+}
+
+nav ul li a::after {
+  /* Depois do conteúdo do a. */
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: var(--base-color);
+  position: absolute;
+  left: 0;
+  bottom: -1.5rem;
+}
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+  transition: width 0.2s;
+}
+
+nav ul li a.title {
+  font: 500 var(--title-font-size) var(--title-font);
+}
+
+nav ul li a.title:hover {
+  font: 500 var(--title-font-size) var(--title-font);
+}
+
+nav ul li a.active {
+  font: 700 var(--title-font-size) var(--title-font);
+}
+
+nav .icon-close {
+  visibility: hidden;
+  position: absolute;
+  right: 1.5rem;
+  transition: 0.2s;
+  top: -1.5rem;
+}
+
+nav.show .icon-close {
+  visibility: visible;
+  top: 1.5rem;
+}
+
+.toggle {
+  color: var(--base-color);
+  font-size: 1.5rem; /* os ícones se transformaram em fontes */
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
+
+.logo {
+  font: 700 1.5rem var(--title-font);
+  color: var(--title-color);
+}
+
+.logo span {
+  color: var(--base-color);
+}
+
+.section {
+  padding: calc(5rem + var(--header-height)) 0;
+}
+
+.section header {
+  margin-bottom: 4rem;
+}
+
+.section header strong {
+  color: var(--base-color);
+}
+
+.section .subtitle {
+  font-size: var(--subtitle-font-size);
+}
+
+.divider-1 {
+  height: 1px;
+  background: linear-gradient(
+    270deg,
+    hsla(var(--hue), 36%, 57%, 1) 0%,
+    hsla(var(--hue), 65%, 88%, 0.34) 100%
+  );
+}
+
+#home {
+  overflow: hidden;
+}
+
+#home .container {
+  margin: 0;
+}
+
+#home .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: center;
+}
+
+#home .image img {
+  position: relative;
+  right: 2.93rem;
+}
+
+#home .image {
+  position: relative;
+}
+
+#home .image::before {
+  /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -16.8%;
+  left: 16.7%;
+  z-index: 0;
+}
+
+#home .image img,
+#home .image::before {
+  border-radius: 0.25rem;
+}
+
+#home a i {
+  margin-right: 0.75rem;
+  font-size: 1.5rem;
+}
+
+#home .text p {
+  margin-bottom: 2rem;
+  /* max-width: 100%; */
+}
+
+.grid {
+  display: grid;
+  gap: 2rem; /* propriedade do display grid. Distancia um elemento do outro */
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+#about {
+  background: white;
+}
+
+#about .container {
+  margin: 0;
+}
+
+#about .text {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+#about .image img {
+  position: relative;
+}
+
+#about .image {
+  position: relative;
+}
+
+#about .image::before {
+  /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+  content: '';
+  height: 100%;
+  width: 100%;
+  background: var(--base-color-second);
+  position: absolute;
+  top: -8.3%;
+  left: -33%;
+  z-index: 0;
+}
+
+#about .image img,
+#about .image::before {
+  border-radius: 0.25rem;
+}
+
+/* #about .text h2 {
+  margin-bottom: 1rem;
+} */
+
+#about .text p {
+  margin-bottom: 2rem;
+  /* max-width: 100%; */
+}
+
+.divider-2 {
+  height: 1px;
+  background: linear-gradient(
+    -270deg,
+    hsla(var(--hue), 36%, 57%, 1) 0%,
+    hsla(var(--hue), 65%, 88%, 0.34) 100%
+  );
+}
+
+.cards.grid {
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 3.625rem 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-bottom: 0.25rem solid var(--base-color);
+  border-radius: 0.25rem 0.25rem 0 0;
+  text-align: center;
+}
+
+.card i {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 5rem;
+  color: var(--base-color);
+}
+
+.card .title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#testimonials {
+  background: white;
+}
+
+#testimonials blockquote {
+  padding: 2rem;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 0.25rem;
+  /* margin-left: 1.5rem;
+  margin-right: 1.5rem; */
+}
+
+#testimonials blockquote p {
+  position: relative;
+  text-indent: 1.875rem;
+  margin-bottom: 1.5rem;
+  color: var(--title-color);
+}
+
+#testimonials blockquote p span {
+  font: 700 2.75rem serif;
+  color: var(--base-color);
+  position: absolute;
+  left: -1.875rem;
+  top: -0.65rem;
+}
+
+#testimonials cite img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  clip-path: circle();
+  margin-right: 0.5rem;
+}
+
+#testimonials cite {
+  display: flex;
+  align-items: center;
+  font-style: normal;
+}
+
+#testimonials .container {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#testimonials header {
+  margin-bottom: 0;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+/* SWIPER */
+
+.swiper-slide {
+  height: auto;
+  padding: 4rem 1.5rem;
+}
+
+.swiper-pagination-bullet {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--base-color);
+}
+
+/* CONTACTS */
+
+#contact header i {
+  margin-right: 0.75rem;
+  font-size: 1.5rem;
+}
+
+#contact .text .button {
+  margin-top: 2rem;
+}
+
+#contact .informations i {
+  font-size: 1.5rem;
+  color: var(--base-color);
+  margin-right: 0.875rem;
+}
+
+#contact .informations li {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+footer {
+  background: var(--base-color);
+}
+
+footer.section {
+  padding: 4rem 0;
+}
+
+footer .logo span {
+  color: var(--body-color);
+}
+
+footer .logo {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+footer .brand p {
+  color: var(--text-color-light);
+  margin-bottom: 0.75rem;
+}
+
+footer i {
+  font-size: 1.5rem;
+  color: var(--text-color-light);
+}
+
+footer .social {
+  grid-auto-flow: column;
+  width: fit-content;
+}
+
+footer .social a {
+  transition: 0.3s;
+  display: inline-block;
+}
+
+footer .social a:hover {
+  transform: translateY(-8px);
+}
+
+.back-to-top {
+  background: var(--base-color);
+  position: fixed;
+  right: 0.5rem;
+  bottom: 1rem;
+  padding: 0.5rem;
+  clip-path: circle();
+  color: var(--text-color-light);
+  font-size: 1.5rem;
+  line-height: 0;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+  transform: translateY(150%);
+}
+
+.back-to-top.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* MEDIA QUERIES */
+/* extra large devices: maior que 1200 */
+/* large devices: maior que 1023 */
+/* large devices: maior que 992 */
+/* medium devices: maior que 767 */
+
+@media (min-width: 992px) {
+  :root {
+    --title-font-size: 2.25rem;
+    --subtitle-font-size: 1.125rem;
+  }
+}
+
+/* --------------------------------- */
+/* extra large devices: maior que 1200 */
+/* large devices: maior que 1023 */
+/* large devices: maior que 992 */
+/* medium devices: maior que 767 */
+
+@media (min-width: 540px) and (max-width: 766px) {
+  #home .container {
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 767px) and (max-width: 992px) {
+  main {
+    margin-top: var(--header-height);
+  }
+
+  .container {
+    max-width: 687px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  nav ul li a.title {
+    font: 500 var(--title-font-size) var(--title-font);
+  }
+
+  nav ul li a.title:hover {
+    font: 500 var(--title-font-size) var(--title-font);
+  }
+  nav ul li a.title.active {
+    font: 700 var(--title-font-size) var(--title-font);
+  }
+
+  #home {
+    overflow: hidden;
+  }
+
+  #home .container {
+    max-width: 687px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+  }
+
+  #home .text {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    text-align: center;
+  }
+
+  #home .image img {
+    position: relative;
+    left: 0;
+  }
+
+  #home .image {
+    position: relative;
+  }
+
+  #home .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -16.8%;
+    left: 16.7%;
+    z-index: 0;
+  }
+
+  #home .image img,
+  #home .image::before {
+    border-radius: 0.25rem;
+  }
+
+  #home a i {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  #home .text p {
+    margin-bottom: 2rem;
+    /* max-width: 100%; */
+  }
+
+  .grid {
+    display: grid;
+    gap: 2rem; /* propriedade do display grid. Distancia um elemento do outro */
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  #about .container {
+    max-width: 687px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #about .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -13%;
+    left: -15%;
+    z-index: 0;
+  }
+
+  #services header {
+    text-align: center;
+  }
+
+  #services .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #services .card {
+    padding: 2rem 2rem;
+  }
+
+  #testimonials .container {
+    max-width: 687px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #testimonials .title {
+    text-align: center;
+  }
+
+  #testimonials .tetimonial {
+    height: 100rem;
+  }
+
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center; /* centraliza verticalmente */
+  }
+
+  #contact header {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #contact .text {
+    max-width: 20rem;
+  }
+
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (min-width: 993px) and (max-width: 1022px) {
+  .container {
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  nav .icon-menu {
+    display: none;
+  }
+
+  nav .menu ul li a.title {
+    font: 500 1rem var(--body-font);
+  }
+
+  nav .menu ul li a.title:hover {
+    font: 500 1rem var(--body-font);
+  }
+
+  nav .menu ul li a.active {
+    font: 700 1rem var(--body-font);
+  }
+
+  #home {
+    overflow: hidden;
+  }
+
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  #home .image {
+    order: 1; /* order só funciona com display grid ou flex */
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 20rem;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #home .image img {
+    position: relative;
+    right: auto;
+    left: auto;
+  }
+
+  #home .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -16.8%;
+    left: 16.7%;
+    z-index: 0;
+  }
+
+  #home .image img,
+  #home .image::before {
+    border-radius: 0.25rem;
+  }
+
+  #home a i {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  #home .text p {
+    margin-bottom: 2rem;
+    /* max-width: 100%; */
+  }
+
+  .grid {
+    display: grid;
+    gap: 2rem; /* propriedade do display grid. Distancia um elemento do outro */
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  #about .container {
+    grid-auto-flow: column;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    /* max-width: 1200px; */
+  }
+
+  #about .image {
+    margin-left: 0;
+  }
+
+  #about .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 90%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -13%;
+    left: -15%;
+    z-index: 0;
+  }
+
+  #services header {
+    text-align: center;
+  }
+
+  #services .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #services .card {
+    padding: 2rem 2rem;
+  }
+
+  #testimonials .container {
+    max-width: 687px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #testimonials .title {
+    text-align: center;
+  }
+
+  #testimonials .tetimonial {
+    height: 100rem;
+  }
+
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center; /* centraliza verticalmente */
+  }
+
+  #contact header {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #contact .text {
+    max-width: 20rem;
+  }
+
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1023px) and (max-width: 1199px) {
+  .container {
+    max-width: 944px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  .section {
+    padding: 10rem 0;
+  }
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .icon-menu {
+    display: none;
+  }
+
+  nav .menu ul li a.title {
+    font: 500 1rem var(--body-font);
+  }
+
+  nav .menu ul li a.title:hover {
+    font: 500 1rem var(--body-font);
+  }
+
+  nav .menu ul li a.title.active {
+    font: 700 1rem var(--body-font);
+  }
+
+  #home {
+    overflow: hidden;
+  }
+
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+  }
+
+  #home .image {
+    order: 1; /* order só funciona com display grid ou flex */
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 20rem;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #home .image img {
+    position: relative;
+    right: auto;
+    left: auto;
+  }
+
+  #home .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -16.8%;
+    left: 16.7%;
+    z-index: 0;
+  }
+
+  #home .image img,
+  #home .image::before {
+    border-radius: 0.25rem;
+  }
+
+  #home a i {
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
+  }
+
+  #home .text p {
+    margin-bottom: 2rem;
+    /* max-width: 100%; */
+  }
+
+  .grid {
+    display: grid;
+    gap: 2rem; /* propriedade do display grid. Distancia um elemento do outro */
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  #about .container {
+    grid-auto-flow: column;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    /* max-width: 1200px; */
+  }
+
+  #about .image {
+    margin-left: 0;
+  }
+
+  #about .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 90%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -10%;
+    left: -15%;
+    z-index: 0;
+  }
+
+  #services header {
+    text-align: center;
+  }
+
+  #services .cards {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #services .card {
+    padding: 2rem 2rem;
+  }
+
+  #testimonials .container {
+    max-width: 687px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #testimonials .title {
+    text-align: center;
+  }
+
+  #testimonials .tetimonial {
+    height: 100rem;
+  }
+
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center; /* centraliza verticalmente */
+  }
+
+  #contact header {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #contact .text {
+    max-width: 20rem;
+  }
+
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  main {
+    margin-top: var(--header-height);
+  }
+
+  .container {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section {
+    padding: 10rem 0;
+  }
+
+  .section header,
+  #testimonials header {
+    max-width: 32.7rem;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .button {
+    height: 3.125rem;
+  }
+
+  nav .menu {
+    opacity: 1;
+    visibility: visible;
+    top: 0;
+  }
+
+  nav .menu ul {
+    display: flex;
+    gap: 2rem;
+  }
+
+  nav .icon-menu {
+    display: none;
+  }
+
+  nav .menu ul li a.title {
+    font: 500 1rem var(--body-font);
+  }
+
+  nav .menu ul li a.title:hover {
+    font: 500 1rem var(--body-font);
+  }
+
+  nav .menu ul li a.title.active {
+    font: 700 1rem var(--body-font);
+  }
+
+  #home .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    gap: 7.375rem;
+  }
+
+  #home .image {
+    order: 1; /* order só funciona com display grid ou flex */
+  }
+
+  #home .text {
+    order: 0;
+    max-width: 24rem;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #home .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -15%;
+    left: 5%;
+    z-index: 0;
+  }
+
+  #about .container {
+    grid-auto-flow: column;
+    margin: 0 auto;
+
+    justify-content: space-between;
+    /* max-width: 1200px; */
+  }
+
+  #about .image {
+    margin-left: 0;
+  }
+
+  #about .image::before {
+    /* cria um elemento antes do conteúdo da .image. Ou seja, antes da tag img */
+    content: '';
+    height: 90%;
+    width: 100%;
+    background: var(--base-color-second);
+    position: absolute;
+    top: -13%;
+    left: -15%;
+    z-index: 0;
+  }
+
+  #services .cards {
+    /* grid-auto-flow: column;
+    justify-content: space-between; */
+    /* VAMOS FAZER DE OUTRA FORMA PARA TREINAR */
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  #services .card {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  #testimonials .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #contact .container {
+    grid-auto-flow: column;
+    align-items: center; /* centraliza verticalmente */
+  }
+
+  #contact header {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  #contact .text {
+    max-width: 25rem;
+  }
+
+  footer.section {
+    padding: 3.75rem 0;
+  }
+
+  footer .container {
+    grid-auto-flow: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .logo {
+    font-size: 2.25rem;
+  }
+}
